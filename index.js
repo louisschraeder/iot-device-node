@@ -164,7 +164,7 @@ const serverCertFile = `./roots.pem`;
 const mqttBridgeHostname = `mqtt.googleapis.com`;
 const mqttBridgePort = 8883;
 const messageType = `events`;
-const numMessages = 5;
+const numMessages = 100;
 
 // The mqttClientId is a unique string that identifies this device. For Google
 // Cloud IoT Core, it must be in the format below.
