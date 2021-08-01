@@ -156,7 +156,6 @@ const publishAsync = (
 //[Start Example]
 const deviceId = `raspi-device`;
 const registryId = `louissch`;
-const projectId = 'ace-lotus-321217';
 const region = `europe-west1`;
 const algorithm = `RS256`;
 const privateKeyFile = `./rsa_private.pem`;
