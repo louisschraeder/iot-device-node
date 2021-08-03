@@ -43,7 +43,17 @@ const createJwt = (projectId, privateKeyFile, algorithm) => {
 };
 // [END iot_mqtt_jwt]
 
+async function exec() {
+    try {
+        const res = await sensor.read(11, 4);
 
+        const json = '{ "temp": "'+ res.temperature.toFixed(1) +'" , "hum": "' + res.humidity.toFixed(1) +'"}';
+        const obj = JSON.parse(json);
+        console.log(obj);
+    } catch (err) {
+        console.error("Failed to read sensor data:", err);
+    }
+}
 
 // Publish numMessages messages asynchronously, starting from message
 // messagesSent.
@@ -156,17 +166,6 @@ const publishAsync = (
 };
 // [END iot_mqtt_publish]
 
-async function exec() {
-    try {
-        const res = await sensor.read(11, 4);
-
-        const json = '{ "temp": "'+ res.temperature.toFixed(1) +'" , "hum": "' + res.humidity.toFixed(1) +'"}';
-        const obj = JSON.parse(json);
-        console.log(obj);
-    } catch (err) {
-        console.error("Failed to read sensor data:", err);
-    }
-}
 
 //[Start Example]
 const deviceId = `raspi-device`;
@@ -261,7 +260,6 @@ const mqttTopic = `/devices/${deviceId}/${messageType}`;
 //[End Example]
 
 //---
-setInterval(exec, 10000);
 
 
 const {argv} = require('yargs')
@@ -481,3 +479,4 @@ const {argv} = require('yargs')
     .help()
     .strict();
 
+setInterval(exec, 10000);
