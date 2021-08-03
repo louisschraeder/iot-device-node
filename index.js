@@ -1,6 +1,6 @@
 const sensor = require("node-dht-sensor").promises;
 
-async function exec() {
+function exec() {
     try {
         const res = await sensor.read(11, 4);
         console.log(
@@ -12,7 +12,7 @@ async function exec() {
     }
 }
 
-exec();
+setInterval(exec, 1000);
 
 
 
