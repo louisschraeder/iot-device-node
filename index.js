@@ -479,4 +479,4 @@ const {argv} = require('yargs')
     .help()
     .strict();
 
-//setInterval(exec, 10000);
+setInterval(exec, 10000);
