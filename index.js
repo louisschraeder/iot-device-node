@@ -1,21 +1,6 @@
 'use strict';
-const obj = '{}';
-
-
 const sensor = require("node-dht-sensor").promises;
-
-async function exec() {
-    try {
-        const res = await sensor.read(11, 4);
-
-        const json = '{ "temp": "'+ res.temperature.toFixed(1) +'" , "hum": "' + res.humidity.toFixed(1) +'"}';
-        const obj = JSON.parse(json);
-        console.log(obj);
-        send();
-    } catch (err) {
-        console.error("Failed to read sensor data:", err);
-    }
-}
+const obj = '{ "temp": "25" , "hum": "49.0"}';
 
 
 // [START iot_mqtt_include]
@@ -171,6 +156,18 @@ const publishAsync = (
 };
 // [END iot_mqtt_publish]
 
+async function exec() {
+    try {
+        const res = await sensor.read(11, 4);
+
+        const json = '{ "temp": "'+ res.temperature.toFixed(1) +'" , "hum": "' + res.humidity.toFixed(1) +'"}';
+        const obj = JSON.parse(json);
+        console.log(obj);
+        send();
+    } catch (err) {
+        console.error("Failed to read sensor data:", err);
+    }
+}
 
 //[Start Example]
 const deviceId = `raspi-device`;
