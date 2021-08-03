@@ -17,12 +17,14 @@ async function exec() {
         }
         const obj = JSON.stringify(json);
         console.log(obj);
+        console.log(obj.temp);
+        console.log(obj.hum);
     } catch (err) {
         console.error("Failed to read sensor data:", err);
     }
 }
 
-setInterval(exec, 10000);
+setInterval(exec, 1000);
 
 
 
