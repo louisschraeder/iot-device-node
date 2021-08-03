@@ -16,7 +16,6 @@ async function exec() {
         console.error("Failed to read sensor data:", err);
     }
 }
-setInterval(exec, 10000);
 
 
 // [START iot_mqtt_include]
@@ -225,8 +224,7 @@ client.subscribe(`/devices/${deviceId}/commands/#`, {qos: 0});
 // same as the device registry's Cloud Pub/Sub topic.
 const mqttTopic = `/devices/${deviceId}/${messageType}`;
 
-async function send() {
-    await client.on('connect', success => {
+    client.on('connect', success => {
         console.log('connect');
         if (!success) {
             console.log('Client not connected...');
@@ -235,16 +233,16 @@ async function send() {
         }
     });
 
-    await client.on('close', () => {
+    client.on('close', () => {
         console.log('close');
         shouldBackoff = true;
     });
 
-    await client.on('error', err => {
+    client.on('error', err => {
         console.log('error', err);
     });
 
-    await client.on('message', (topic, message) => {
+    client.on('message', (topic, message) => {
         let messageStr = 'Message received: ';
         if (topic === `/devices/${deviceId}/config`) {
             messageStr = 'Config message received: ';
@@ -256,20 +254,18 @@ async function send() {
         console.log(messageStr);
     });
 
-    await client.on('packetsend', () => {
+    client.on('packetsend', () => {
         // Note: logging packet send is very verbose
 
     });
-}
 
 // Once all of the messages have been published, the connection to Google Cloud
 // IoT will be closed and the process will exit. See the publishAsync method.
 
 //[End Example]
 
-
 //---
-
+setInterval(exec, 10000);
 
 
 const {argv} = require('yargs')
