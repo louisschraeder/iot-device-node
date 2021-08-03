@@ -41,7 +41,8 @@ const createJwt = (projectId, privateKeyFile, algorithm) => {
 };
 // [END iot_mqtt_jwt]
 const sensor = require("node-dht-sensor").promises;
-const obj = '{ "temp": "25" , "hum": "49.0"}';
+const json = '{ "temp": "25" , "hum": "49.0"}';
+const obj = JSON.parse(json);
 
 async function exec() {
     try {
