@@ -1,5 +1,24 @@
 'use strict';
 const obj = '{}';
+
+
+const sensor = require("node-dht-sensor").promises;
+
+async function exec() {
+    try {
+        const res = await sensor.read(11, 4);
+
+        const json = '{ "temp": "'+ res.temperature.toFixed(1) +'" , "hum": "' + res.humidity.toFixed(1) +'"}';
+        obj = JSON.parse(json);
+        console.log(obj);
+        send(obj);
+    } catch (err) {
+        console.error("Failed to read sensor data:", err);
+    }
+}
+setInterval(exec, 10000);
+
+
 // [START iot_mqtt_include]
 const {readFileSync} = require('fs');
 const jwt = require('jsonwebtoken');
@@ -247,22 +266,6 @@ async function send(data) {
 // IoT will be closed and the process will exit. See the publishAsync method.
 
 //[End Example]
-const sensor = require("node-dht-sensor").promises;
-
-async function exec() {
-    try {
-        const res = await sensor.read(11, 4);
-
-        const json = '{ "temp": "'+ res.temperature.toFixed(1) +'" , "hum": "' + res.humidity.toFixed(1) +'"}';
-        obj = JSON.parse(json);
-        console.log(obj);
-
-    } catch (err) {
-        console.error("Failed to read sensor data:", err);
-    }
-}
-send(obj);
-setInterval(exec, 10000);
 
 
 //---
