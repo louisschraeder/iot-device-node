@@ -1,5 +1,5 @@
 'use strict';
-const obj = '{}';
+//const obj = '{}';
 
 
 const sensor = require("node-dht-sensor").promises;
@@ -9,7 +9,7 @@ async function exec() {
         const res = await sensor.read(11, 4);
 
         const json = '{ "temp": "'+ res.temperature.toFixed(1) +'" , "hum": "' + res.humidity.toFixed(1) +'"}';
-        obj = JSON.parse(json);
+        const obj = JSON.parse(json);
         console.log(obj);
         send(obj);
     } catch (err) {
