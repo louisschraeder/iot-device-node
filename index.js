@@ -1,5 +1,5 @@
 'use strict';
-//const obj = '{}';
+const obj = '{}';
 
 
 const sensor = require("node-dht-sensor").promises;
