@@ -223,40 +223,40 @@ client.subscribe(`/devices/${deviceId}/commands/#`, {qos: 0});
 // same as the device registry's Cloud Pub/Sub topic.
 const mqttTopic = `/devices/${deviceId}/${messageType}`;
 
-    client.on('connect', success => {
-        console.log('connect');
-        if (!success) {
-            console.log('Client not connected...');
-        } else if (!publishChainInProgress) {
-            publishAsync(mqttTopic, client, iatTime, obj, 1, connectionArgs);
-        }
-    });
+client.on('connect', success => {
+    console.log('connect');
+    if (!success) {
+        console.log('Client not connected...');
+    } else if (!publishChainInProgress) {
+        publishAsync(mqttTopic, client, iatTime, 1, 100, connectionArgs);
+    }
+});
 
-    client.on('close', () => {
-        console.log('close');
-        shouldBackoff = true;
-    });
+client.on('close', () => {
+    console.log('close');
+    shouldBackoff = true;
+});
 
-    client.on('error', err => {
-        console.log('error', err);
-    });
+client.on('error', err => {
+    console.log('error', err);
+});
 
-    client.on('message', (topic, message) => {
-        let messageStr = 'Message received: ';
-        if (topic === `/devices/${deviceId}/config`) {
-            messageStr = 'Config message received: ';
-        } else if (topic.startsWith(`/devices/${deviceId}/commands`)) {
-            messageStr = 'Command message received: ';
-        }
+client.on('message', (topic, message) => {
+    let messageStr = 'Message received: ';
+    if (topic === `/devices/${deviceId}/config`) {
+        messageStr = 'Config message received: ';
+    } else if (topic.startsWith(`/devices/${deviceId}/commands`)) {
+        messageStr = 'Command message received: ';
+    }
 
-        messageStr += Buffer.from(message, 'base64').toString('ascii');
-        console.log(messageStr);
-    });
+    messageStr += Buffer.from(message, 'base64').toString('ascii');
+    console.log(messageStr);
+});
 
-    client.on('packetsend', () => {
-        // Note: logging packet send is very verbose
+client.on('packetsend', () => {
+    // Note: logging packet send is very verbose
 
-    });
+});
 
 // Once all of the messages have been published, the connection to Google Cloud
 // IoT will be closed and the process will exit. See the publishAsync method.
