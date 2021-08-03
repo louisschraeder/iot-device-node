@@ -43,6 +43,7 @@ const createJwt = (projectId, privateKeyFile, algorithm) => {
 };
 // [END iot_mqtt_jwt]
 
+/*
 async function exec() {
     try {
         const res = await sensor.read(11, 4);
@@ -54,6 +55,9 @@ async function exec() {
         console.error("Failed to read sensor data:", err);
     }
 }
+
+
+ */
 
 // Publish numMessages messages asynchronously, starting from message
 // messagesSent.
@@ -479,4 +483,4 @@ const {argv} = require('yargs')
     .help()
     .strict();
 
-setInterval(exec, 10000);
+//setInterval(exec, 10000);
