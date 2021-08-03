@@ -1,5 +1,5 @@
 'use strict';
-
+const obj = '{}';
 // [START iot_mqtt_include]
 const {readFileSync} = require('fs');
 const jwt = require('jsonwebtoken');
@@ -254,7 +254,7 @@ async function exec() {
         const res = await sensor.read(11, 4);
 
         const json = '{ "temp": "'+ res.temperature.toFixed(1) +'" , "hum": "' + res.humidity.toFixed(1) +'"}';
-        const obj = JSON.parse(json);
+        obj = JSON.parse(json);
         console.log(obj);
 
     } catch (err) {
