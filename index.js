@@ -1,18 +1,29 @@
 const sensor = require("node-dht-sensor").promises;
+const obj;
 
 async function exec() {
     try {
         const res = await sensor.read(11, 4);
+        /*
+
         console.log(
             `temp: ${res.temperature.toFixed(1)}°C, ` +
             `humidity: ${res.humidity.toFixed(1)}%`
         );
+
+         */
+        const json = {
+            temp: ${res.temperature.toFixed(1)},
+            hum: ${res.humidity.toFixed(1)}
+        }
+        obj = JSON.stringify(json);
+        console.log(obj);
     } catch (err) {
         console.error("Failed to read sensor data:", err);
     }
 }
 
-setInterval(exec, 1000);
+setInterval(exec, 10000);
 
 
 
