@@ -11,7 +11,7 @@ async function exec() {
         const json = '{ "temp": "'+ res.temperature.toFixed(1) +'" , "hum": "' + res.humidity.toFixed(1) +'"}';
         const obj = JSON.parse(json);
         console.log(obj);
-        send(obj);
+        send();
     } catch (err) {
         console.error("Failed to read sensor data:", err);
     }
@@ -225,13 +225,13 @@ client.subscribe(`/devices/${deviceId}/commands/#`, {qos: 0});
 // same as the device registry's Cloud Pub/Sub topic.
 const mqttTopic = `/devices/${deviceId}/${messageType}`;
 
-async function send(data) {
+async function send() {
     await client.on('connect', success => {
         console.log('connect');
         if (!success) {
             console.log('Client not connected...');
         } else if (!publishChainInProgress) {
-            publishAsync(mqttTopic, client, iatTime, data, 1, connectionArgs);
+            publishAsync(mqttTopic, client, iatTime, obj, 1, connectionArgs);
         }
     });
 
