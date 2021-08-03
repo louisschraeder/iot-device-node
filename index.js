@@ -15,7 +15,7 @@ async function exec() {
             temp: res.temperature.toFixed(1),
             hum: res.humidity.toFixed(1)
         }
-        const obj = JSON.stringify(json);
+        const obj = JSON.parse(json);
         console.log(obj);
         console.log(obj.temp);
         console.log(obj.hum);
