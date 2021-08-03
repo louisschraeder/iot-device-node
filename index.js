@@ -40,14 +40,23 @@ const createJwt = (projectId, privateKeyFile, algorithm) => {
     return jwt.sign(token, privateKey, {algorithm: algorithm});
 };
 // [END iot_mqtt_jwt]
+var o = {} // empty Object
+var key = 'dv1';
+o[key] = [];
 const sensor = require("node-dht-sensor").promises;
-const obj = '{ "temp": "25" , "hum": "49.0"}';
+const obj = {
+    temp: '25',
+    hum: '49.0'
+};
 
 async function exec() {
     try {
         const res = await sensor.read(11, 4);
-
-        const obj = '{ "temp": "'+ res.temperature.toFixed(1) +'" , "hum": "' + res.humidity.toFixed(1) +'"}';
+        const obj = {
+            temp: res.temperature.toFixed(1),
+            hum: res.humidity.toFixed(1)
+        };
+        //const obj = '{ "temp": "'+ res.temperature.toFixed(1) +'" , "hum": "' + res.humidity.toFixed(1) +'"}';
         //const obj = JSON.parse(json);
         console.log(obj);
     } catch (err) {
@@ -225,7 +234,8 @@ client.on('connect', success => {
     if (!success) {
         console.log('Client not connected...');
     } else if (!publishChainInProgress) {
-        publishAsync(mqttTopic, client, iatTime, JSON.stringify(obj), numMessages, connectionArgs);
+        o[key].push(obj);
+        publishAsync(mqttTopic, client, iatTime, JSON.stringify(o), numMessages, connectionArgs);
     }
 });
 
