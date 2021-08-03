@@ -42,7 +42,11 @@ const createJwt = (projectId, privateKeyFile, algorithm) => {
 // [END iot_mqtt_jwt]
 const sensor = require("node-dht-sensor").promises;
 const json = '{ "temp": "25" , "hum": "49.0"}';
-const obj = JSON.parse(json);
+try {
+    const obj = JSON.parse(json);
+} catch (e) {
+    console.log("not JSON");
+}
 
 async function exec() {
     try {
@@ -89,6 +93,7 @@ const publishAsync = (
 
     setTimeout(() => {
         const payload = `${argv.registryId}/${argv.deviceId}-payload-${messagesSent}`;
+        //const payload = `${messagesSent}`;
 
         // Publish "payload" to the MQTT topic. qos=1 means at least once delivery.
         // Cloud IoT Core also supports qos=0 for at most once delivery.
@@ -158,7 +163,7 @@ const publishAsync = (
                 mqttTopic,
                 client,
                 iatTime,
-                messagesSent + 1,
+                messagesSent,
                 numMessages,
                 connectionArgs
             );
