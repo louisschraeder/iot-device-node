@@ -1,6 +1,6 @@
 'use strict';
-const sensor = require("node-dht-sensor").promises;
-const obj = '{ "temp": "25" , "hum": "49.0"}';
+//const sensor = require("node-dht-sensor").promises;
+//const obj = '{ "temp": "25" , "hum": "49.0"}';
 
 
 // [START iot_mqtt_include]
