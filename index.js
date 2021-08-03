@@ -1,8 +1,8 @@
 const sensor = require("node-dht-sensor").promises;
 
-function exec() {
+async function exec() {
     try {
-        const res = sensor.read(11, 4);
+        const res = await sensor.read(11, 4);
         console.log(
             `temp: ${res.temperature.toFixed(1)}°C, ` +
             `humidity: ${res.humidity.toFixed(1)}%`
