@@ -256,13 +256,12 @@ async function exec() {
         const json = '{ "temp": "'+ res.temperature.toFixed(1) +'" , "hum": "' + res.humidity.toFixed(1) +'"}';
         const obj = JSON.parse(json);
         console.log(obj);
-        setInterval(send(obj), 10000);
 
     } catch (err) {
         console.error("Failed to read sensor data:", err);
     }
 }
-
+send(obj);
 setInterval(exec, 10000);
 
 
