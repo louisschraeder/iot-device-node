@@ -1,6 +1,4 @@
 'use strict';
-//const sensor = require("node-dht-sensor").promises;
-//const obj = '{ "temp": "25" , "hum": "49.0"}';
 
 
 // [START iot_mqtt_include]
@@ -42,8 +40,9 @@ const createJwt = (projectId, privateKeyFile, algorithm) => {
     return jwt.sign(token, privateKey, {algorithm: algorithm});
 };
 // [END iot_mqtt_jwt]
+const sensor = require("node-dht-sensor").promises;
+const obj = '{ "temp": "25" , "hum": "49.0"}';
 
-/*
 async function exec() {
     try {
         const res = await sensor.read(11, 4);
@@ -55,9 +54,6 @@ async function exec() {
         console.error("Failed to read sensor data:", err);
     }
 }
-
-
- */
 
 // Publish numMessages messages asynchronously, starting from message
 // messagesSent.
@@ -182,7 +178,7 @@ const serverCertFile = `./roots.pem`;
 const mqttBridgeHostname = `mqtt.googleapis.com`;
 const mqttBridgePort = 8883;
 const messageType = `events`;
-const numMessages = 100;
+const numMessages = 3;
 
 // The mqttClientId is a unique string that identifies this device. For Google
 // Cloud IoT Core, it must be in the format below.
@@ -228,7 +224,7 @@ client.on('connect', success => {
     if (!success) {
         console.log('Client not connected...');
     } else if (!publishChainInProgress) {
-        publishAsync(mqttTopic, client, iatTime, 1, 100, connectionArgs);
+        publishAsync(mqttTopic, client, iatTime, obj, numMessages, connectionArgs);
     }
 });
 
