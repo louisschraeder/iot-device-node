@@ -11,11 +11,8 @@ async function exec() {
         );
 
          */
-        const json = {
-            temp: res.temperature.toFixed(1),
-            hum: res.humidity.toFixed(1)
-    };
-        //const obj = JSON.parse('$json');
+        const json = '{ temp: ${res.temperature.toFixed(1)} , hum: ${res.humidity.toFixed(1)}}';
+        const obj = JSON.parse(json);
         console.log(obj);
         console.log(obj.temp);
         console.log(obj.hum);
