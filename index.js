@@ -206,8 +206,8 @@ client.subscribe(`/devices/${deviceId}/commands/#`, {qos: 0});
 // same as the device registry's Cloud Pub/Sub topic.
 const mqttTopic = `/devices/${deviceId}/${messageType}`;
 
-function send(data) {
-    client.on('connect', success => {
+async function send(data) {
+    await client.on('connect', success => {
         console.log('connect');
         if (!success) {
             console.log('Client not connected...');
@@ -216,16 +216,16 @@ function send(data) {
         }
     });
 
-    client.on('close', () => {
+    await client.on('close', () => {
         console.log('close');
         shouldBackoff = true;
     });
 
-    client.on('error', err => {
+    await client.on('error', err => {
         console.log('error', err);
     });
 
-    client.on('message', (topic, message) => {
+    await client.on('message', (topic, message) => {
         let messageStr = 'Message received: ';
         if (topic === `/devices/${deviceId}/config`) {
             messageStr = 'Config message received: ';
@@ -237,8 +237,9 @@ function send(data) {
         console.log(messageStr);
     });
 
-    client.on('packetsend', () => {
+    await client.on('packetsend', () => {
         // Note: logging packet send is very verbose
+
     });
 }
 
